@@ -30,3 +30,23 @@ def plot_ema(df, title):
     plt.title(f'{title}EMA of website hits over time')
     plt.legend()
     plt.show()
+
+
+# 2 new dfs, Data Science and Web Dev
+def seperate_programs(df):
+    '''
+    makes 2 new dfs from original df, 1 for data science 
+    students and the other for web dev students
+    '''
+    #program_id 3 is Data Science, this pulls all rows with 3 for program_id
+    datsci_df = df.loc[df['program_id'] == 3]
+   
+    webdev_df1 = df.loc[df['program_id'] == 1 ]
+    webdev_df2 = df.loc[df['program_id'] == 2 ]
+    webdev_df4 = df.loc[df['program_id'] == 4 ]
+
+    webdev_df = pd.concat([webdev_df1, webdev_df2, webdev_df4])
+
+
+
+    return datsci_df, webdev_df
