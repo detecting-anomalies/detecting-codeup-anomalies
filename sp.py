@@ -47,6 +47,40 @@ def seperate_programs(df):
 
     webdev_df = pd.concat([webdev_df1, webdev_df2, webdev_df4])
 
-
-
     return datsci_df, webdev_df
+
+
+'''
+def get_boll_w_m_q(column):
+    weekly_avg = daily_hits.ewm(span=7).mean()
+    monthly_avg = daily_hits.ewm(span=30).mean()
+    quarterly_avg = daily_hits.ewm(span=90).mean()
+
+    weekly_boll = compute_bollinger(weekly_avg, column, span= 7, k=1.5)
+    monthly_boll = compute_bollinger(monthly_avg, column, span= 30, k=1.5)
+    quarterly_boll = compute_bollinger(quarterly_avg, column, span= 90, k=1.5)
+'''
+
+def resample_to_plot_pipeline(df, col_to_resamp, W_M_Q, span, k=1.5):
+    '''
+    in progress
+    '''
+    daily_hits = df[col_to_resamp].resample(W_M_Q).count()
+    daily_hits.sort_values(ascending= False)
+    weekly_avg = daily_hits.ewm(span=span).mean()
+    weekly_boll = compute_bollinger(weekly_avg, 'hits', span= span, k=k)
+
+    return 
+
+
+def wrangle_resample_plot_cohort (df, time):
+    '''
+    this takes in either datsci_df or webdev_df and drops columns
+    '''
+    df['date'] = pd.to_datetime(df['date'], infer_datetime_format=True)
+    df = df.set_index('date')
+    df = df.drop(columns= ['name', 'slack', 'deleted_at'])
+    df = df['path'].resample(time).count()
+    df.plot()
+    return df
+
