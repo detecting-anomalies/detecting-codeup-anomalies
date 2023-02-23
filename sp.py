@@ -75,6 +75,7 @@ def resample_to_plot_pipeline(df, col_to_resamp, W_M_Q, span, k=1.5):
 
 def wrangle_resample_plot_cohort (df, time):
     '''
+    run this after running seperate_programs
     this takes in either datsci_df or webdev_df and drops columns
     '''
     df['date'] = pd.to_datetime(df['date'], infer_datetime_format=True)
